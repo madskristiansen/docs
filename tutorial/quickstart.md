@@ -1,5 +1,100 @@
-# Getting started
+# Getting started – Raspberry Pi
 
-Befor you can start your project, you will need to
+In this tutorial we will show you how to develop a small website
+served on Nginx, "dockerize" it to on your laptop
+(for x86-64 architectures) and then deploy
+that Docker container seamlessly to your Raspberry Pi B 2 or 3.
+We will be using marina.io to automatically build a Docker image
+that works on ARM devices – all from the same git repository!
+
+## Create your Docker image
+
+For the purposes of this tutorial, we'll create a simple website we'll host
+using nginx. As a basis we'll use the
+[official Nginx Docker image](https://hub.docker.com/_/nginx/) that normally
+only works on x86-64 machines.
+We assume you have [Docker](https://www.docker.com/) installed
+on your laptop since you're reading this :)
+
+Start by creating a project folder:
+
+    $ mkdir hello-marina
+    $ cd hello-marina
+
+Let's write our mighty website by creating an *web* folder and an *index.html*
+file inside it with the following contents:
+
+```
+Hello x86-64 and ARM world!
+```
+
+Let's go ahead and create a *Dockerfile* back in the root of our *hello-marina*
+project directory and edit it to contain:
+
+```
+FROM nginx:latest
+COPY web /usr/share/nginx/html
+```
+
+Now let's build this Docker image locally and run it as a new container.
+
+    docker build -t hello-marina .
+    docker run -it -p 8080:80 hello-marina
+
+If you now open <http://localhost:8080> you will hopefully see our lean & agile
+website rendered. Awesome!
+
+Now we'll make a git repository and push it to [GitHub](https://github.com/).
+
+    git init
+    git add -A
+    git commit -m "the website"
+    git remote add origin git@github.com:yourusername/hello-marina.git # modify!
+    git push -u origin master
+
+Now your files should be on GitHub. At this point, you'd be able to deploy
+your image to x86-64 VMs using [Docker Hub](https://hub.docker.com), but we want
+to deploy it on our Raspberry Pi, so we need marina.io. On to the next phase…
+
+## Build the ARM image on marina.io
+
+Before you can build your project for ARM on marina.io, you will need to
 [register a marina.io account](https://marina.io/auth/register), so go ahead and
 do that now. Done? Great!
+
+First, create a new automatic build by going to Create - Automatic Build in the
+upper right corner after logging in.
+
+![create repository](img/create.png)
+
+Now fill out your "git url" by pasting in your git remote url
+(the HTTPS version), adding a tag "latest" tied to the "master" branch on git
+(the defaults), mark the repo as "public"
+and fill out the name as "hello-marina".
+The build settings should look something like this:
+
+![automatic build settings](img/automatic-build.png)
+
+Click "Save" when you're done.
+
+Now if you go back to your images by clicking your username in the sidebar
+to the left, you should see the hello-marina image. Click on it and click the
+"Build" button (we will later show how to automate this).
+
+This will trigger marina.io to go fetch the source code from
+GitHub, prepare an ARM version of the Docker image and build it. In the "Builds"
+panel you will see the status change from "assigned" to "built"
+to a green "pushed" state once
+it's successfully been pushed to the marina.io Docker registry.
+
+## Set up your Raspberry Pi
+
+You will need a Raspberry Pi B 2/3 that you can connect to
+and Docker installed on it. If you already have a Pi with
+[Raspbian](https://www.raspberrypi.org/downloads/raspbian/) ready,
+you can install Docker easily these days with a single command:
+
+    curl -sSL https://get.docker.com | sh
+
+Otherwise, there is a more complete tutorial for setting up a Raspberry Pi
+[here](http://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/).

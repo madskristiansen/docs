@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# CloudFleet documentation build configuration file, created by
+# marina.io documentation build configuration file, created by
 # sphinx-quickstart on Fri Jul 31 16:37:39 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -54,9 +54,9 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = u'CloudFleet'
-copyright = u'2015, The CloudFleet Team'
-author = u'The CloudFleet Team'
+project = u'marina.io'
+copyright = u'2017, the marina.io team'
+author = u'the marina.io team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -211,7 +211,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'CloudFleetdoc'
+htmlhelp_basename = 'marina.iodoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -233,8 +233,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'CloudFleet.tex', u'CloudFleet Documentation',
-   u'The CloudFleet Team', 'manual'),
+  (master_doc, 'marina.io.tex', u'marina.io Documentation',
+   u'The marina.io Team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -263,7 +263,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'cloudfleet', u'CloudFleet Documentation',
+    (master_doc, 'marina.io', u'marina.io Documentation',
      [author], 1)
 ]
 
@@ -277,9 +277,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'CloudFleet', u'CloudFleet Documentation',
-   author, 'CloudFleet', 'One line description of project.',
-   'Miscellaneous'),
+  (master_doc, 'marina.io', u'marina.io documentation',
+   author, 'marina.io', 'the home of ARM containers',
+   'Technology'),
 ]
 
 # Documents to append as an appendix to all manuals.
