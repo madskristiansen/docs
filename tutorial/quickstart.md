@@ -18,8 +18,8 @@ on your laptop since you're reading this :)
 
 Start by creating a project folder:
 
-    $ mkdir hello-marina
-    $ cd hello-marina
+    mkdir hello-marina
+    cd hello-marina
 
 Let's write our mighty website by creating an *web* folder and an *index.html*
 file inside it with the following contents:
@@ -36,6 +36,9 @@ FROM nginx:latest
 COPY web /usr/share/nginx/html
 ```
 
+You can see the correct example file layout in
+[this repository](https://github.com/metakermit/hello-marina.git).
+
 Now let's build this Docker image locally and run it as a new container.
 
     docker build -t hello-marina .
@@ -49,7 +52,7 @@ Now we'll make a git repository and push it to [GitHub](https://github.com/).
     git init
     git add -A
     git commit -m "the website"
-    git remote add origin git@github.com:yourusername/hello-marina.git # modify!
+    git remote add origin https://github.com/yourusername/hello-marina.git # modify!
     git push -u origin master
 
 Now your files should be on GitHub. At this point, you'd be able to deploy
@@ -98,3 +101,41 @@ you can install Docker easily these days with a single command:
 
 Otherwise, there is a more complete tutorial for setting up a Raspberry Pi
 [here](http://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/).
+
+To be able to pull your Docker image from marina.io, you need to connect docker
+to it using the same username / password you used for registering to marina.io:
+
+    docker login registry.marina.io
+
+Now you simply pull and run the image using this command
+(be sure to substitute with your username):
+
+    docker run -it -p 8080:80 registry.marina.io/yourusername/hello-marina
+
+If you open the local IP address of your Raspberry pi on port 8080
+from your browser, you should see the same website as the one you developed
+on your laptop – and the container is running on ARM now.
+One codebase – two computer architectures. Magic!
+
+You can now set up port forwarding on your router to the Raspberry Pi port 8080
+and serve the website to the whole world s:)
+
+## Automatic builds after every commit
+
+To enable this, you need to add a GitHub hook to your repository. Open your repo
+settings on GitHub, then under Webhooks click "Add webhook".
+
+![add webhook](img/add_webhook.png)
+
+
+Fill in the details:
+
+- payload url: copy from your settings
+- content type: "application/json"
+- which events: "send me everything"
+- active: yes
+
+and click "Update webhook" once you're done.
+
+Now after each commit you make to your GitHub repository, marina.io will build
+a new version of your Docker image. Splendid!
