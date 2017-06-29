@@ -130,9 +130,10 @@ settings on GitHub, then under Webhooks click "Add webhook".
 
 Fill in the details:
 
-- payload url: copy from your settings
+- payload url: copy from your profile page
 - content type: "application/json"
-- which events: "send me everything"
+- which events: "just the push event"
+- secret: The API key from your profile
 - active: yes
 
 and click "Update webhook" once you're done.
