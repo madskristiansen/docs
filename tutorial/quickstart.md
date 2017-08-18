@@ -25,7 +25,7 @@ Let's write our mighty website by creating an *web* folder and an *index.html*
 file inside it with the following contents:
 
 ```
-Hello x86-64 and ARM world!
+Hello, x86-64 and ARM world!
 ```
 
 Let's go ahead and create a *Dockerfile* back in the root of our *hello-marina*
@@ -102,23 +102,34 @@ you can install Docker easily these days with a single command:
 Otherwise, there is a more complete tutorial for setting up a Raspberry Pi
 [here](http://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/).
 
-To be able to pull your Docker image from marina.io, you need to connect docker
-to it using the same username / password you used for registering to marina.io:
+To be able to pull your Docker image from marina.io to your Raspberry Pi,
+you can anonymously pull from our marina.io registry.
 
-    docker login registry.marina.io
+*In the future we might require you
+to first authenticate with our armhf registry
+with the same username / password
+you used when registering to marina.io, e.g.:*
+
+    docker login armhf.registry.marina.io
+
+*If your ARM device was 64-bit, you'd log in to this registry url instead:*
+
+    docker login aarch64.registry.marina.io
 
 Now you simply pull and run the image using this command
 (be sure to substitute with your username):
 
-    docker run -it -p 8080:80 registry.marina.io/yourusername/hello-marina
+    docker run -it -p 8080:80 armhf.registry.marina.io/yourusername/hello-marina
 
 If you open the local IP address of your Raspberry pi on port 8080
 from your browser, you should see the same website as the one you developed
 on your laptop – and the container is running on ARM now.
 One codebase – two computer architectures. Magic!
 
+![website served from your Raspberry Pi](img/server_running.png)
+
 You can now set up port forwarding on your router to the Raspberry Pi port 8080
-and serve the website to the whole world s:)
+and serve the website to the whole world :)
 
 ## Automatic builds after every commit
 
